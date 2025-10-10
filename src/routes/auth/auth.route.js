@@ -9,4 +9,4 @@ route.post('/login', loginUser);
 // 8000/api/auth/register
 // 8000/api/auth/login
 
-module.export = route;
+module.exports = route;
