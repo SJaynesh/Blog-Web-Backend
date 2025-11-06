@@ -21,6 +21,7 @@ exports.registerUser = async (req, res) => {
         req.body.create_at = moment().format('DD/MM/YYYY, h:mm:ss a');
         req.body.update_at = moment().format('DD/MM/YYYY, h:mm:ss a');
 
+        req.body.profile_image = req.file.path;
 
         const newUser = await userService.registerUser(req.body);
 
