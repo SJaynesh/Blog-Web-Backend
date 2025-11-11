@@ -7,6 +7,19 @@ const userSchema = mongoose.Schema({
     gender: String,
     about: String,
     profile_image: String,
+    reset_otp: String,
+    reset_otp_expire: {
+        type: Date,
+        default: null
+    },
+    attempt: {
+        type: Number,
+        default: 0,
+    },
+    attempt_expire: {
+        type: Date,
+        default: null
+    },
     create_at: String,
     update_at: String,
     isActive: {

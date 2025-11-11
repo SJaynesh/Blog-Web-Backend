@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUser, loginUser } = require('../../controllers/auth/auth.controller');
+const { registerUser, loginUser, verifyOTP, forgotPassword, changePassword } = require('../../controllers/auth/auth.controller');
 
 const multer = require('multer');
 const { storage } = require("../../config/cloudinary.config");
@@ -10,6 +10,10 @@ const route = express.Router();
 
 route.post('/register', upload.single('profile_image'), registerUser);
 route.post('/login', loginUser);
+
+route.post('/forgot_password', forgotPassword);
+route.post('/verify_otp', verifyOTP);
+route.post('/change_password', changePassword);
 
 // 8000/api/auth/register
 // 8000/api/auth/login
