@@ -72,15 +72,25 @@ exports.forgotPassword = async (req, res) => {
         const user = await userService.fetchSingleUser({ email });
 
         if (!user) {
-            res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
+            return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
         }
 
+        if (user.attempt_expire && user.attempt_expire < Date.now()) { // 7.33 < 7.35
+            user.attempt = 0;
+        }
+
+        if (user.attempt >= 3) { //0 >= 3
+            return res.json(errorResponse(StatusCodes.TOO_MANY_REQUESTS, true, MSG.MANY_TIME_OTP));
+        }
+
+        user.attempt++; // 3
+
         const OTP = Math.floor(100000 + Math.random() * 900000);
-        const expireTime = new Date(Date.now() + 2 * 60 * 1000); //6:10 + 120000   Ans : 06:12
+        const expireTime = new Date(Date.now() + 30 * 60 * 1000); //6:10 + 120000   Ans : 06:12
 
         sendMail(email, OTP);
 
-        await userService.updateUser(user._id, { reset_otp: OTP, reset_otp_expire: expireTime });
+        await userService.updateUser(user._id, { reset_otp: OTP, reset_otp_expire: expireTime, attempt: user.attempt, attempt_expire: new Date(Date.now() + 60 * 60 * 1000) });
 
         return res.json(successResponse(StatusCodes.OK, false, MSG.OTP_SEND));
     } catch (err) {
@@ -100,10 +110,23 @@ exports.verifyOTP = async (req, res) => {
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
         }
+        console.log("First", user.verify_attempt);
+
+        if (user.verify_attempt_expire && user.verify_attempt_expire < Date.now()) { // 7.33 < 7.35
+            user.verify_attempt = 0;
+        }
+
+        if (user.verify_attempt >= 3) { //0 >= 3
+            return res.json(errorResponse(StatusCodes.TOO_MANY_REQUESTS, true, MSG.MANY_TIME_OTP));
+        }
 
         if (user.reset_otp_expire < Date.now()) { // 6:12 < 6:11
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.OTP_EXPIRED));
         }
+
+        user.verify_attempt++; // 3
+        console.log("Second", user.verify_attempt);
+        await userService.updateUser(user._id, { verify_attempt: user.verify_attempt, verify_attempt_expire: new Date(Date.now() + 60 * 60 * 1000) });
 
         if (OTP !== user.reset_otp) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.INVALID_OTP));

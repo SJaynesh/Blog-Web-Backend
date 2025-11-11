@@ -21,6 +21,7 @@ module.exports.MSG = {
     OTP_EXPIRED: "OTP expired",
     VERIFY_OTP: "OTP verified successfully",
     INVALID_OTP: "Invalid OTP",
+    MANY_TIME_OTP: "Please try agian after 60 minutes",
     LOGOUT_SUCCESS: "Logged out successfully",
 
 
