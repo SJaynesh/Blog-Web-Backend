@@ -86,7 +86,7 @@ exports.forgotPassword = async (req, res) => {
         user.attempt++; // 3
 
         const OTP = Math.floor(100000 + Math.random() * 900000);
-        const expireTime = new Date(Date.now() + 30 * 60 * 1000); //6:10 + 120000   Ans : 06:12
+        const expireTime = new Date(Date.now() + 2 * 60 * 1000); //6:10 + 120000   Ans : 06:12
 
         sendMail(email, OTP);
 
