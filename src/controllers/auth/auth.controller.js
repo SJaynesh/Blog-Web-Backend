@@ -36,7 +36,7 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const user = await userService.fetchSingleUser({ email: req.body.email });
+        const user = await userService.fetchSingleUser({ email: req.body.email, isDelete: false });
 
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));

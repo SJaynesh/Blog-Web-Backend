@@ -23,6 +23,8 @@ module.exports.MSG = {
     INVALID_OTP: "Invalid OTP",
     MANY_TIME_OTP: "Please try agian after 60 minutes",
     LOGOUT_SUCCESS: "Logged out successfully",
+    USERS_SUCCESS: "All users fetched successfully",
+    USER_SUCCESS: "User fetch successfully",
 
 
     // Token
