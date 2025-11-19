@@ -69,7 +69,7 @@ exports.forgotPassword = async (req, res) => {
 
         const { email } = req.body;
 
-        const user = await userService.fetchSingleUser({ email });
+        const user = await userService.fetchSingleUser({ email, isDelete: false });
 
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
@@ -105,7 +105,7 @@ exports.verifyOTP = async (req, res) => {
 
         const { email, OTP } = req.body;
 
-        const user = await userService.fetchSingleUser({ email });
+        const user = await userService.fetchSingleUser({ email, isDelete: false });
 
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
@@ -146,7 +146,7 @@ exports.changePassword = async (req, res) => {
         console.log(req.body);
         const { email, newPassword } = req.body;
 
-        const user = await userService.fetchSingleUser({ email });
+        const user = await userService.fetchSingleUser({ email, isDelete: false });
 
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));

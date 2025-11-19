@@ -17,7 +17,7 @@ module.exports = class UserService {
     // Fetch Single User body = {email : gautam@gmail.com,}
     async fetchSingleUser(body) {
         try {
-            return await User.findOne(body).select('name email gender about profile_image');
+            return await User.findOne(body).select('name email password gender about profile_image');
         } catch (error) {
             console.log(error);
             return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
