@@ -31,6 +31,36 @@ module.exports.MSG = {
     TOKEN_MISSING: 'Token is missing',
     TOKEN_INVALID: 'Token is invalid or expired',
 
+    // Blog
+    BLOG_CREATED: "Blog created successfully",
+    BLOG_CREATION_FAILED: "Failed to create blog",
+
+    BLOG_UPDATED: "Blog updated successfully",
+    BLOG_UPDATE_FAILED: "Failed to update blog",
+
+    BLOG_DELETED: "Blog deleted successfully",
+    BLOG_DELETE_FAILED: "Failed to delete blog",
+
+    BLOG_FETCH_SUCCESS: "Blog fetched successfully",
+    BLOGS_FETCH_SUCCESS: "All blogs fetched successfully",
+
+    BLOG_NOT_FOUND: "Blog not found",
+    BLOG_ALREADY_EXISTS: "A blog with this title already exists",
+
+    COMMENT_ADDED: "Comment added successfully",
+    COMMENT_FAILED: "Failed to add comment",
+    COMMENT_DELETED: "Comment deleted successfully",
+
+    LIKE_ADDED: "Blog liked successfully",
+    LIKE_REMOVED: "Like removed successfully",
+
+    BLOG_UNAUTHORIZED: "You are not authorized to modify this blog",
+    INVALID_BLOG_ID: "Invalid blog ID",
+    TAGS_UPDATED: "Tags updated successfully",
+    CATEGORY_UPDATED: "Category updated successfully",
+
+
+
 
     // General 
     SERVER_ERROR: "Something went wrong. Please try again later.",

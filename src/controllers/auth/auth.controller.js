@@ -26,7 +26,6 @@ exports.registerUser = async (req, res) => {
 
         const newUser = await userService.registerUser(req.body);
 
-
         return res.json(successResponse(StatusCodes.CREATED, false, MSG.USER_CREATED, newUser));
     } catch (error) {
         console.log(error);

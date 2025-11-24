@@ -15,7 +15,6 @@ const authMiddleware = async (req, res, next) => {
     }
     try {
         token = token.slice(7, token.length);
-        console.log("Token :", token);
 
         const decodeData = jwt.verify(token, process.env.JWT_SECRET);
 

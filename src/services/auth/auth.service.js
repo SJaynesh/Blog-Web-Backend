@@ -5,7 +5,7 @@ const User = require('../../models/user.model');
 
 module.exports = class UserService {
     // User Register
-    async registerUser(body) {
+    async registerUser(body, res) {
         try {
             return await User.create(body);
         } catch (error) {
