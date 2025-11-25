@@ -126,3 +126,66 @@ exports.getCurrentUserBlogs = async (req, res) => {
         return res.json(errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR));
     }
 }
+
+exports.addBlogComment = async (req, res) => {
+    try {
+
+        console.log(req.params.blogId);
+        console.log(req.body);
+
+        const { msg } = req.body;
+
+        if (!msg) {
+            return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.MSG_REQUIRED));
+        }
+
+        const blog = await blogService.fetchSingleBlog({ _id: req.params.blogId });
+
+        const comment = {
+            userId: req.user.id,
+            msg,
+            create_at: moment().format('DD/MM/YYYY, h:mm:ss a'),
+        }
+
+        blog.comment.push(comment);
+
+        const addedComment = await blogService.updateBlog(req.params.blogId, { comment: blog.comment });
+
+        if (!addedComment) {
+            return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.COMMENT_FAILED));
+        }
+
+        return res.json(successResponse(StatusCodes.CREATED, false, MSG.COMMENT_ADDED, addedComment));
+    } catch (err) {
+        console.log(err);
+        return res.json(errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR));
+    }
+}
+
+exports.likeBlog = async (req, res) => {
+    try {
+
+        console.log(req.params.blogId);
+        console.log(req.query);
+
+
+        const blog = await blogService.fetchSingleBlog({ _id: req.params.blogId });
+
+        if (req.query.like == 'true') {
+            blog.likes++;
+        } else {
+            blog.likes--;
+        }
+
+        const addedLiked = await blogService.updateBlog(req.params.blogId, { likes: blog.likes });
+
+        if (!addedLiked) {
+            return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.LIKE_FAILED));
+        }
+
+        return res.json(successResponse(StatusCodes.CREATED, false, MSG.LIKE_ADDED, addedLiked));
+    } catch (err) {
+        console.log(err);
+        return res.json(errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR));
+    }
+}

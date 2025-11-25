@@ -47,11 +47,13 @@ module.exports.MSG = {
     BLOG_NOT_FOUND: "Blog not found",
     BLOG_ALREADY_EXISTS: "A blog with this title already exists",
 
+    MSG_REQUIRED: "Comment message required",
     COMMENT_ADDED: "Comment added successfully",
     COMMENT_FAILED: "Failed to add comment",
     COMMENT_DELETED: "Comment deleted successfully",
 
     LIKE_ADDED: "Blog liked successfully",
+    LIKE_FAILED: "Failed to like blog",
     LIKE_REMOVED: "Like removed successfully",
 
     BLOG_UNAUTHORIZED: "You are not authorized to modify this blog",

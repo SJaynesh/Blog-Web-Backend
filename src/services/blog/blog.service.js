@@ -48,7 +48,7 @@ module.exports = class BlogService {
             return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
         }
     }
-
+    
     async fetchCurrentUserBlogs(body) {
         try {
             return await Blog.find({ author: body }).populate('author', 'name gender profile_image');
