@@ -164,10 +164,8 @@ exports.addBlogComment = async (req, res) => {
 
 exports.likeBlog = async (req, res) => {
     try {
-
         console.log(req.params.blogId);
         console.log(req.query);
-
 
         const blog = await blogService.fetchSingleBlog({ _id: req.params.blogId });
 
