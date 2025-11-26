@@ -14,6 +14,15 @@ module.exports = class UserService {
         }
     }
 
+    async fetchSingleUserForOTP(body) {
+        try {
+            return await User.findOne(body);
+        } catch (error) {
+            console.log(error);
+            return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
+        }
+    }
+
     // Fetch Single User body = {email : gautam@gmail.com,}
     async fetchSingleUser(body) {
         try {

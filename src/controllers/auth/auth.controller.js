@@ -104,7 +104,7 @@ exports.verifyOTP = async (req, res) => {
 
         const { email, OTP } = req.body;
 
-        const user = await userService.fetchSingleUser({ email, isDelete: false });
+        const user = await userService.fetchSingleUserForOTP({ email, isDelete: false });
 
         if (!user) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.USER_NOT_FOUND));
@@ -126,6 +126,9 @@ exports.verifyOTP = async (req, res) => {
         user.verify_attempt++; // 3
         console.log("Second", user.verify_attempt);
         await userService.updateUser(user._id, { verify_attempt: user.verify_attempt, verify_attempt_expire: new Date(Date.now() + 60 * 60 * 1000) });
+
+        console.log("User OTP : ", user.reset_otp);
+        console.log("OTP : ", OTP);
 
         if (OTP !== user.reset_otp) {
             return res.json(errorResponse(StatusCodes.BAD_REQUEST, true, MSG.INVALID_OTP));
