@@ -15,7 +15,7 @@ module.exports = class BlogService {
 
     async fetchAllBlogs() {
         try {
-            return await Blog.find({}).populate('author', 'name gender profile_image');
+            return await Blog.find({}).populate('author', 'name gender profile_image').populate('comment.userId', 'name profile_image');
         } catch (err) {
             console.log(err);
             return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
@@ -42,13 +42,13 @@ module.exports = class BlogService {
 
     async fetchSingleBlog(body) {
         try {
-            return await Blog.findOne(body);
+            return await Blog.findOne(body).populate('author', 'name gender profile_image').populate('comment.userId', 'name profile_image');
         } catch (err) {
             console.log(err);
             return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
         }
     }
-    
+
     async fetchCurrentUserBlogs(body) {
         try {
             return await Blog.find({ author: body }).populate('author', 'name gender profile_image');
