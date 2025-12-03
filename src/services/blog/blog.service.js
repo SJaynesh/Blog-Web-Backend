@@ -24,7 +24,7 @@ module.exports = class BlogService {
 
     async updateBlog(id, body) {
         try {
-            return await Blog.findByIdAndUpdate(id, body, { new: true });
+            return await Blog.findByIdAndUpdate(id, body, { new: true }).populate('author', 'name gender profile_image').populate('comment.userId', 'name profile_image');
         } catch (err) {
             console.log(err);
             return errorResponse(StatusCodes.INTERNAL_SERVER_ERROR, true, MSG.SERVER_ERROR);
